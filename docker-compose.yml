@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres_keuangan
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 27agustus2005
+      POSTGRES_DB: keuangan_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_keuangan_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_keuangan_data:
