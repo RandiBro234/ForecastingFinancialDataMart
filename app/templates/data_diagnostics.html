@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block subtitle %}Statistical tests and residual analysis for data integrity.{% endblock %}
+
+{% block content %}
+<!-- Stat Tests -->
+<div class="grid-4">
+    <div class="card">
+        <div class="card-title">ADF Test</div>
+        <div class="card-value" style="font-size: 1.25rem;">p-value: 0.296</div>
+        <div style="margin-top: 0.5rem;">
+            <span class="badge badge-danger">Non-Stationary</span>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">KPSS Test</div>
+        <div class="card-value" style="font-size: 1.25rem;">p-value: 0.01</div>
+        <div style="margin-top: 0.5rem;">
+            <span class="badge badge-danger">Non-Stationary</span>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-title">Ljung-Box (GPR)</div>
+        <div class="card-value" style="font-size: 1.25rem; color: var(--danger);">Autocorrelated</div>
+        <div style="margin-top: 0.5rem;">
+            <span class="badge badge-danger">Not White Noise</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">Ljung-Box (SARIMA)</div>
+        <div class="card-value" style="font-size: 1.25rem; color: var(--success);">Independent</div>
+        <div style="margin-top: 0.5rem;">
+            <span class="badge badge-success">White Noise</span>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-bottom: 2rem;">
+    <div class="card-header">
+        <h3 class="card-title" style="margin: 0; color: var(--text-color);">GPR Coverage Probability (95% CI)</h3>
+    </div>
+    <div class="card-value" style="color: var(--primary);">92.59%</div>
+    <p style="color: var(--muted-color); margin-top: 0.5rem;">Proporsi data aktual yang jatuh di dalam rentang prediksi GPR.</p>
+</div>
+
+<!-- Residual ACF/PACF Plots -->
+<h3 class="page-title" style="font-size: 1.25rem; margin-bottom: 1rem;">Residual ACF & PACF Plots</h3>
+<div class="grid-2">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">SARIMA Residuals</h3>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; padding: 1rem; background-color: #f9fafb; border-radius: 8px;">
+            <img src="/outputs/residual_acf_pacf_sarima.png" alt="SARIMA ACF/PACF" style="max-width: 100%; border-radius: 4px; border: 1px solid #e5e7eb;">
+        </div>
+        <div class="card-body" style="margin-top: 1rem;">
+            <p><i class="fa-solid fa-check-circle" style="color: var(--success);"></i> <strong>Good:</strong> Residual SARIMA lebih baik karena tidak menunjukkan autokorelasi yang signifikan, mengindikasikan model menangkap informasi dengan optimal.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">GPR Residuals</h3>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; padding: 1rem; background-color: #f9fafb; border-radius: 8px;">
+            <img src="/outputs/residual_acf_pacf_gpr.png" alt="GPR ACF/PACF" style="max-width: 100%; border-radius: 4px; border: 1px solid #e5e7eb;">
+        </div>
+        <div class="card-body" style="margin-top: 1rem;">
+            <p><i class="fa-solid fa-exclamation-triangle" style="color: #F59E0B;"></i> <strong>Warning:</strong> Residual GPR masih memiliki pola (autokorelasi) pada beberapa lag, menandakan masih ada informasi yang tertinggal dan tidak terjelaskan oleh model.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

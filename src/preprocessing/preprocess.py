@@ -121,13 +121,18 @@ def inverse_scale_y(y_scaled, y_scaler):
     ).ravel()
 
 
-def plot_boxplot(df, target_col="total_pendapatan", output_path="boxplot.png"):
-    plt.figure(figsize=(10, 5))
+def plot_boxplot(
+    df,
+    target_col="total_pendapatan",
+    output_path="outputs/boxplot.png"
+):
+    plt.figure(figsize=(12, 6))
     plt.boxplot(df[target_col])
-    plt.title(f"Boxplot {target_col}")
-    plt.ylabel(target_col)
+    plt.title(f"Boxplot Distribution of {target_col}")
+    plt.ylabel("Revenue Value")
+    plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.savefig(output_path)
+    plt.savefig(output_path, dpi=300)
     plt.close()
 
     print(f"Boxplot disimpan ke {output_path}")

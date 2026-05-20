@@ -8,3 +8,7 @@ matplotlib
 plotly
 jupyter
 ipykernel
+fastapi
+uvicorn
+jinja2
+python-multipart

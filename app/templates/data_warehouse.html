@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block subtitle %}Data Warehouse structure and extraction status.{% endblock %}
+
+{% block content %}
+<div class="grid-3">
+    <!-- Star Schema Info -->
+    <div class="card" style="grid-column: span 1;">
+        <div class="card-header">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">Data Dimensions</h3>
+        </div>
+        <div class="table-container">
+            <table>
+                <tbody>
+                    <tr>
+                        <td><strong>dim_waktu</strong></td>
+                        <td style="text-align: right;">4,018</td>
+                    </tr>
+                    <tr>
+                        <td><strong>dim_akun</strong></td>
+                        <td style="text-align: right;">100</td>
+                    </tr>
+                    <tr>
+                        <td><strong>dim_pusat_biaya</strong></td>
+                        <td style="text-align: right;">100</td>
+                    </tr>
+                    <tr>
+                        <td><strong>dim_pelanggan</strong></td>
+                        <td style="text-align: right;">300</td>
+                    </tr>
+                    <tr>
+                        <td><strong>dim_pemasok</strong></td>
+                        <td style="text-align: right;">200</td>
+                    </tr>
+                    <tr>
+                        <td><strong>dim_jenis_transaksi</strong></td>
+                        <td style="text-align: right;">10</td>
+                    </tr>
+                    <tr style="background-color: #fef2f2;">
+                        <td style="color: var(--danger);"><strong>fakta_transaksi_keuangan</strong></td>
+                        <td style="text-align: right; font-weight: bold; color: var(--danger);">50,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card-header" style="margin-top: 2rem;">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">ETL Status</h3>
+        </div>
+        <ul style="list-style-type: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem;">
+            <li><i class="fa-solid fa-circle-check" style="color: var(--success); margin-right: 8px;"></i> MySQL OLTP → PostgreSQL Data Mart berhasil.</li>
+            <li><i class="fa-solid fa-circle-check" style="color: var(--success); margin-right: 8px;"></i> Lookup dimensi berhasil.</li>
+            <li><i class="fa-solid fa-circle-check" style="color: var(--success); margin-right: 8px;"></i> Fact table berhasil dimuat.</li>
+            <li><i class="fa-solid fa-circle-check" style="color: var(--success); margin-right: 8px;"></i> View forecasting bulanan (<code>v_forecasting_bulanan</code>) tersedia.</li>
+        </ul>
+    </div>
+
+    <!-- Star Schema Visual -->
+    <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">Star Schema Architecture</h3>
+        </div>
+        <div class="star-schema">
+            <!-- Central Fact Table -->
+            <div class="schema-node fact">
+                <i class="fa-solid fa-database" style="margin-bottom: 5px; display: block;"></i>
+                fakta_transaksi_keuangan
+                <div style="font-weight: normal; font-size: 0.75rem; margin-top: 5px;">50,000 rows</div>
+            </div>
+            
+            <!-- Dimensions -->
+            <div class="schema-node dim-1">
+                <i class="fa-regular fa-calendar" style="margin-bottom: 5px; display: block; color: var(--primary);"></i>
+                dim_waktu<br><span style="color: var(--muted-color);">4,018</span>
+            </div>
+            <div class="schema-node dim-2">
+                <i class="fa-solid fa-file-invoice-dollar" style="margin-bottom: 5px; display: block; color: var(--primary);"></i>
+                dim_akun<br><span style="color: var(--muted-color);">100</span>
+            </div>
+            <div class="schema-node dim-3">
+                <i class="fa-solid fa-building" style="margin-bottom: 5px; display: block; color: var(--primary);"></i>
+                dim_pusat_biaya<br><span style="color: var(--muted-color);">100</span>
+            </div>
+            <div class="schema-node dim-4">
+                <i class="fa-solid fa-users" style="margin-bottom: 5px; display: block; color: var(--primary);"></i>
+                dim_pelanggan<br><span style="color: var(--muted-color);">300</span>
+            </div>
+            <div class="schema-node dim-5">
+                <i class="fa-solid fa-truck" style="margin-bottom: 5px; display: block; color: var(--primary);"></i>
+                dim_pemasok<br><span style="color: var(--muted-color);">200</span>
+            </div>
+            <div class="schema-node dim-6">
+                <i class="fa-solid fa-tags" style="margin-bottom: 5px; display: block; color: var(--primary);"></i>
+                dim_jenis_transaksi<br><span style="color: var(--muted-color);">10</span>
+            </div>
+            
+            <!-- SVG Lines to connect them -->
+            <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;">
+                <!-- Connecting lines from center to nodes -->
+                <line x1="50%" y1="50%" x2="50%" y2="20%" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                <line x1="50%" y1="50%" x2="50%" y2="80%" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                <line x1="50%" y1="50%" x2="80%" y2="35%" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                <line x1="50%" y1="50%" x2="80%" y2="65%" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                <line x1="50%" y1="50%" x2="20%" y2="35%" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+                <line x1="50%" y1="50%" x2="20%" y2="65%" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4" />
+            </svg>
+        </div>
+    </div>
+</div>
+{% endblock %}

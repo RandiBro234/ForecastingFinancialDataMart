@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block subtitle %}Performance metrics comparison between GPR and SARIMA models.{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+    <!-- Comparison Table -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">Metrics Comparison</h3>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>GPR</th>
+                        <th>SARIMA</th>
+                        <th>Best Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>MAE</strong></td>
+                        <td>855.80M</td>
+                        <td style="color: var(--success); font-weight: bold;">510.23M</td>
+                        <td><span class="badge badge-success">SARIMA</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>RMSE</strong></td>
+                        <td>1.04B</td>
+                        <td style="color: var(--success); font-weight: bold;">607.23M</td>
+                        <td><span class="badge badge-success">SARIMA</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>MAPE</strong></td>
+                        <td>9.20%</td>
+                        <td style="color: var(--success); font-weight: bold;">5.70%</td>
+                        <td><span class="badge badge-success">SARIMA</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-body" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed #e5e7eb;">
+            <h4 style="margin-bottom: 0.5rem; font-size: 1rem;">Conclusion</h4>
+            <p><strong>SARIMA</strong> unggul pada semua metrik evaluasi. MAPE SARIMA <strong>5.70%</strong> masuk ke dalam kategori <em>highly accurate</em>. Sementara itu, GPR dengan MAPE 9.20% juga masih tergolong akurat, tetapi tidak sebaik SARIMA dalam menangkap fluktuasi.</p>
+        </div>
+    </div>
+
+    <!-- Comparison Chart -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">Error Metrics Chart</h3>
+        </div>
+        <div class="chart-container-sm">
+            <canvas id="evaluationChart"></canvas>
+        </div>
+        <p style="text-align: center; font-size: 0.8rem; color: var(--muted-color); margin-top: 1rem;">(Values in scale for comparison. Lower is better.)</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block subtitle %}Interactive comparison of Actual vs Forecast models.{% endblock %}
+
+{% block content %}
+<div class="grid-3">
+    <!-- Chart Container -->
+    <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+            <h3 class="card-title" style="margin: 0; color: var(--text-color);">Actual vs Forecast Revenue</h3>
+        </div>
+        <div class="chart-container">
+            <canvas id="forecastChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Interpretation -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="card gradient-primary">
+            <div class="card-title">Best Forecast Model</div>
+            <div class="card-value">SARIMA</div>
+        </div>
+        
+        <div class="grid-2" style="margin-bottom: 0;">
+            <div class="card" style="border: 1px solid var(--success); box-shadow: none;">
+                <div class="card-title" style="color: var(--success);">SARIMA MAPE</div>
+                <div class="card-value" style="font-size: 1.5rem;">5.70%</div>
+            </div>
+            <div class="card" style="border: 1px solid var(--primary); box-shadow: none;">
+                <div class="card-title" style="color: var(--primary);">GPR MAPE</div>
+                <div class="card-value" style="font-size: 1.5rem;">9.20%</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title" style="margin: 0; color: var(--text-color);">Model Analysis</h3>
+            </div>
+            <div class="card-body">
+                <p style="margin-bottom: 1rem;"><strong style="color: var(--primary);">GPR:</strong> Lebih smooth dan cenderung menangkap tren global jangka panjang dengan baik.</p>
+                <p><strong style="color: var(--success);">SARIMA:</strong> Lebih dekat dengan pola aktual karena menangkap seasonality (musiman) dari data pendapatan dengan akurat.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
