@@ -1,38 +1,61 @@
-# plot forecast
 import matplotlib.pyplot as plt
 
 
-def plot_forecast(df, split_idx, y_pred_gpr, y_std_gpr, y_pred_sarima):
-
+def plot_forecast(
+    df,
+    split_idx,
+    y_pred_gpr,
+    y_std_gpr,
+    y_pred_sarima,
+    y_pred_prophet,
+):
     test_df = df.iloc[split_idx:].copy()
 
     plt.figure(figsize=(14, 7))
 
+    # =========================
     # Actual Data
+    # =========================
     plt.plot(
         df["periode_index"],
         df["total_pendapatan"],
         label="Actual Revenue",
-        linewidth=2.5,
+        linewidth=2,
     )
 
+    # =========================
     # GPR Forecast
+    # =========================
     plt.plot(
         test_df["periode_index"],
         y_pred_gpr,
         label="GPR Forecast",
-        linewidth=2.5,
+        linewidth=2,
     )
 
+    # =========================
     # SARIMA Forecast
+    # =========================
     plt.plot(
         test_df["periode_index"],
         y_pred_sarima,
         label="SARIMA Forecast",
-        linewidth=2.5,
+        linewidth=2,
     )
 
-    # Confidence Interval GPR
+    # =========================
+    # Prophet Forecast
+    # =========================
+    plt.plot(
+        test_df["periode_index"],
+        y_pred_prophet,
+        label="Prophet Forecast",
+        linewidth=2,
+    )
+
+    # =========================
+    # GPR Confidence Interval
+    # =========================
     plt.fill_between(
         test_df["periode_index"],
         y_pred_gpr - 1.96 * y_std_gpr,
@@ -41,23 +64,26 @@ def plot_forecast(df, split_idx, y_pred_gpr, y_std_gpr, y_pred_sarima):
         label="GPR 95% Confidence Interval",
     )
 
-    # Axis & Title
-    plt.xlabel("Monthly Period Index")
-    plt.ylabel("Total Revenue")
-    plt.title("Monthly Financial Revenue Forecasting")
+    # =========================
+    # Styling
+    # =========================
+    plt.xlabel("Periode Bulanan")
+    plt.ylabel("Total Pendapatan")
+    plt.title("Forecasting Pendapatan Bulanan")
 
-    # Grid
-    plt.grid(alpha=0.3)
-
-    # Legend
     plt.legend()
 
-    # Layout
+    plt.grid(True, linestyle="--", alpha=0.5)
+
     plt.tight_layout()
 
-    # Save Figure
-    plt.savefig("outputs/forecast_result.png", dpi=300)
+    # =========================
+    # Save
+    # =========================
+    output_path = "outputs/forecast_result.png"
+
+    plt.savefig(output_path, dpi=300)
 
     plt.close()
 
-    print("Grafik forecast disimpan ke outputs/forecast_result.png")
+    print(f"Grafik forecast disimpan ke {output_path}")
